@@ -1,6 +1,7 @@
 package com.example.instagram.commentlike.entity;
 
 import com.example.instagram.comment.entity.Comment;
+import com.example.instagram.commentlike.dto.CommentLikeRequestDto;
 import com.example.instagram.common.entity.CreatedAtEntity;
 import com.example.instagram.user.entity.User;
 import jakarta.persistence.Entity;
@@ -9,10 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Entity
@@ -25,7 +23,8 @@ import lombok.NoArgsConstructor;
                 )
         }
 )
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class CommentLike extends CreatedAtEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -36,9 +35,10 @@ public class CommentLike extends CreatedAtEntity {
     @JoinColumn(name = "comment_id", nullable = false)
     private Comment comment;
 
-    @Builder
-    private CommentLike(User user, Comment comment) {
-        this.user = user;
-        this.comment = comment;
+    public static CommentLike toEntity(CommentLikeRequestDto requestDto, User user, Comment comment) {
+        return CommentLike.builder()
+                .user(user)
+                .comment(comment)
+                .build();
     }
 }

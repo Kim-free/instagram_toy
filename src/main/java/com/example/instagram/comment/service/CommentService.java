@@ -31,7 +31,7 @@ public class CommentService {
     public CommentResponseDto create(Long postId, CommentCreateRequestDto requestDto) {
         Post post = getPost(postId);
         User author = getUser(requestDto.getAuthorId());
-        Comment comment = commentRepository.save(requestDto.toEntity(post, author, null));
+        Comment comment = commentRepository.save(Comment.toEntity(requestDto, post, author, null));
         return CommentResponseDto.toDto(
                 comment,
                 commentLikeRepository.countByCommentId(comment.getId()),
@@ -59,7 +59,7 @@ public class CommentService {
         }
 
         User author = getUser(requestDto.getAuthorId());
-        Comment reply = commentRepository.save(requestDto.toEntity(parent.getPost(), author, parent));
+        Comment reply = commentRepository.save(Comment.toEntity(requestDto, parent.getPost(), author, parent));
         return ReplyResponseDto.toDto(reply, commentLikeRepository.countByCommentId(reply.getId()));
     }
 

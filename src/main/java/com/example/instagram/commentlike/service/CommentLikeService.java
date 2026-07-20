@@ -5,6 +5,7 @@ import com.example.instagram.comment.repository.CommentRepository;
 import com.example.instagram.commentlike.dto.CommentLikeCountResponseDto;
 import com.example.instagram.commentlike.dto.CommentLikeRequestDto;
 import com.example.instagram.commentlike.dto.CommentLikeResponseDto;
+import com.example.instagram.commentlike.entity.CommentLike;
 import com.example.instagram.commentlike.repository.CommentLikeRepository;
 import com.example.instagram.user.entity.User;
 import com.example.instagram.user.repository.UserRepository;
@@ -35,7 +36,7 @@ public class CommentLikeService {
                     return false;
                 })
                 .orElseGet(() -> {
-                    commentLikeRepository.save(requestDto.toEntity(user, comment));
+                    commentLikeRepository.save(CommentLike.toEntity(requestDto, user, comment));
                     return true;
                 });
 

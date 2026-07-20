@@ -1,20 +1,12 @@
 package com.example.instagram.post.dto;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class PostUpdateRequestDto {
 
     private Long userId;
     private String content;
-
-    @Builder
-    private PostUpdateRequestDto(Long userId, String content) {
-        this.userId = userId;
-        this.content = content;
-    }
 }

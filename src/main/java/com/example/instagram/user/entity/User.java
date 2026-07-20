@@ -4,22 +4,16 @@ import com.example.instagram.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Entity
 @Table(name = "users")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class User extends BaseEntity {
 
     @Column(nullable = false)
     private String nickname;
 
-    @Builder
-    private User(String nickname) {
-        this.nickname = nickname;
-    }
 }

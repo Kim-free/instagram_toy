@@ -1,25 +1,16 @@
 package com.example.instagram.post.dto;
 
 import com.example.instagram.postimage.entity.PostImage;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class PostImageResponseDto {
 
     private Long imageId;
     private String imageKey;
     private Integer displayOrder;
-
-    @Builder
-    private PostImageResponseDto(Long imageId, String imageKey, Integer displayOrder) {
-        this.imageId = imageId;
-        this.imageKey = imageKey;
-        this.displayOrder = displayOrder;
-    }
 
     public static PostImageResponseDto toDto(PostImage postImage) {
         return PostImageResponseDto.builder()

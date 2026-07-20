@@ -35,11 +35,11 @@ public class PostService {
         User author = userRepository.findById(requestDto.getAuthorId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-        Post post = postRepository.save(requestDto.toEntity(author));
+        Post post = postRepository.save(Post.toEntity(requestDto, author));
         List<PostImage> images = requestDto.getImages() == null
                 ? List.of()
                 : requestDto.getImages().stream()
-                .map(image -> image.toEntity(post))
+                .map(image -> PostImage.toEntity(image, post))
                 .toList();
         postImageRepository.saveAll(images);
 

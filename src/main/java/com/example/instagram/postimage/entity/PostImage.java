@@ -1,6 +1,7 @@
 package com.example.instagram.postimage.entity;
 
 import com.example.instagram.common.entity.BaseEntity;
+import com.example.instagram.post.dto.PostImageRequestDto;
 import com.example.instagram.post.entity.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,10 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Entity
@@ -25,7 +23,8 @@ import lombok.NoArgsConstructor;
                 )
         }
 )
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class PostImage extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -38,10 +37,11 @@ public class PostImage extends BaseEntity {
     @Column(nullable = false)
     private Integer displayOrder;
 
-    @Builder
-    private PostImage(Post post, String imageKey, Integer displayOrder) {
-        this.post = post;
-        this.imageKey = imageKey;
-        this.displayOrder = displayOrder;
+    public static PostImage toEntity(PostImageRequestDto requestDto, Post post) {
+        return PostImage.builder()
+                .post(post)
+                .imageKey(requestDto.getImageKey())
+                .displayOrder(requestDto.getDisplayOrder())
+                .build();
     }
 }

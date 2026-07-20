@@ -3,13 +3,11 @@ package com.example.instagram.comment.dto;
 import com.example.instagram.comment.entity.Comment;
 import com.example.instagram.common.util.ElapsedTimeFormatter;
 import java.time.LocalDateTime;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class CommentResponseDto {
 
     private Long commentId;
@@ -22,22 +20,6 @@ public class CommentResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String elapsedTime;
-
-    @Builder
-    private CommentResponseDto(Long commentId, Long postId, Long authorId, String nickname,
-                               String content, long likeCount, long replyCount,
-                               LocalDateTime createdAt, LocalDateTime updatedAt, String elapsedTime) {
-        this.commentId = commentId;
-        this.postId = postId;
-        this.authorId = authorId;
-        this.nickname = nickname;
-        this.content = content;
-        this.likeCount = likeCount;
-        this.replyCount = replyCount;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.elapsedTime = elapsedTime;
-    }
 
     public static CommentResponseDto toDto(Comment comment, long likeCount, long replyCount) {
         return CommentResponseDto.builder()

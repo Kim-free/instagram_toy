@@ -4,13 +4,11 @@ import com.example.instagram.common.util.ElapsedTimeFormatter;
 import com.example.instagram.post.entity.Post;
 import java.time.LocalDateTime;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class PostResponseDto {
 
     private Long postId;
@@ -23,22 +21,6 @@ public class PostResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String elapsedTime;
-
-    @Builder
-    private PostResponseDto(Long postId, Long authorId, String nickname, String content,
-                            List<PostImageResponseDto> images, long likeCount, long commentCount,
-                            LocalDateTime createdAt, LocalDateTime updatedAt, String elapsedTime) {
-        this.postId = postId;
-        this.authorId = authorId;
-        this.nickname = nickname;
-        this.content = content;
-        this.images = images;
-        this.likeCount = likeCount;
-        this.commentCount = commentCount;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.elapsedTime = elapsedTime;
-    }
 
     public static PostResponseDto toDto(Post post, List<PostImageResponseDto> images,
                                         long likeCount, long commentCount) {

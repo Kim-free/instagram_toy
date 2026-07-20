@@ -1,5 +1,6 @@
 package com.example.instagram.comment.entity;
 
+import com.example.instagram.comment.dto.CommentCreateRequestDto;
 import com.example.instagram.commentlike.entity.CommentLike;
 import com.example.instagram.common.entity.BaseEntity;
 import com.example.instagram.post.entity.Post;
@@ -13,14 +14,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class Comment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -38,21 +37,24 @@ public class Comment extends BaseEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
+    @Builder.Default
     @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Comment> children = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<CommentLike> likes = new ArrayList<>();
 
-    @Builder
-    private Comment(Post post, User author, Comment parent, String content) {
-        this.post = post;
-        this.author = author;
-        this.parent = parent;
+    public void updateContent(String content) {
         this.content = content;
     }
 
-    public void updateContent(String content) {
-        this.content = content;
+    public static Comment toEntity(CommentCreateRequestDto requestDto, Post post, User author, Comment parent) {
+        return Comment.builder()
+                .post(post)
+                .author(author)
+                .parent(parent)
+                .content(requestDto.getContent())
+                .build();
     }
 }

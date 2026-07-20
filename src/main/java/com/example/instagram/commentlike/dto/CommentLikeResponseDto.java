@@ -1,24 +1,15 @@
 package com.example.instagram.commentlike.dto;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class CommentLikeResponseDto {
 
     private Long commentId;
     private boolean liked;
     private long likeCount;
-
-    @Builder
-    private CommentLikeResponseDto(Long commentId, boolean liked, long likeCount) {
-        this.commentId = commentId;
-        this.liked = liked;
-        this.likeCount = likeCount;
-    }
 
     public static CommentLikeResponseDto toDto(Long commentId, boolean liked, long likeCount) {
         return CommentLikeResponseDto.builder()
